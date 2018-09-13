@@ -10,6 +10,24 @@ class ProductList extends React.Component {
         this.state={
             products:feedback
         }
+        this.voteClicked = this.voteClicked.bind(this);
+    }
+
+    voteClicked(id, check){
+        console.log("Upvote clicked for " + id);
+        const updatedProducts= this.state.products.map((p1)=>{
+            if(p1.id === id && check===1){
+                console.log("m here 1")
+                return Object.assign({},p1,{vote:p1.vote+1})
+            }else if(p1.id === id && check===0){
+                console.log("m here 0")
+                return Object.assign({},p1,{vote:p1.vote-1})
+            }else{
+                return p1
+            }
+        })
+        this.setState({products: updatedProducts})
+        console.log(this.state.products);
     }
     
     render() { 
@@ -17,9 +35,9 @@ class ProductList extends React.Component {
         //const product = feedback[0];
         //console.log(product);
 
-        const product = feedback;
+        //const product = feedback;
 
-        const sortedProducts = product.sort((a,b)=>(b.vote-a.vote))
+        const sortedProducts = this.state.products.sort((a,b)=>(b.vote-a.vote))
 
         const allproducts = sortedProducts.map((feed)=>{
             return(
@@ -31,7 +49,8 @@ class ProductList extends React.Component {
                     url={feed.url}
                     imageUrl={feed.imageUrl}
                     submit={feed.submit}
-                    vote={feed.vote}>
+                    vote={feed.vote}
+                    onCheck={this.voteClicked}>
                 </Product>
             );
         })

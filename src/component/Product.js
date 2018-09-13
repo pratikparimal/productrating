@@ -6,25 +6,19 @@ class Product extends React.Component {
 
     constructor(props){
         super(props);
-        this.state={
-            vote:this.props.vote
-        }
+        
         this.upVote=this.upVote.bind(this);
         this.downVote=this.downVote.bind(this);
     }
 
     upVote(){
         console.log("UpVote")
-        this.setState({
-            vote: this.state.vote + 1
-        })
+        this.props.onCheck(this.props.id, 1)
     }
 
     downVote(){
         console.log("DownVote")
-        this.setState({
-            vote: this.state.vote - 1
-        })
+        this.props.onCheck(this.props.id, 0)
     }
     
     render() { 
@@ -37,7 +31,7 @@ class Product extends React.Component {
                 </div>
                 <div className="middle aligned content">
                     <div className="header">
-                        {this.state.vote}
+                        {this.props.vote}
                         <a onClick={this.upVote}>
                             <i className="chevron circle up icon" />
                         </a>
