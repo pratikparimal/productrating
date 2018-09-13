@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 
 import Product from './Product';
 import feedback from '../data';
@@ -7,10 +8,25 @@ class ProductList extends React.Component {
 
     constructor(){
         super();
-        this.state={
+        /* this.state={
             products:feedback
+        } */
+        this.state={
+            products:[]
         }
         this.voteClicked = this.voteClicked.bind(this);
+    }
+
+    componentWillMount(){
+        this.getApiData()
+    }
+
+    getApiData(){
+        axios.get("http://localhost:4444/feeds")
+            .then((response)=>{
+                //console.log(response.data);
+                this.setState({products: response.data})
+            })
     }
 
     voteClicked(id, check){
